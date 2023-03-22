@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:futursity/models/coursemodel.dart';
 import 'package:futursity/services/courseremoteservice.dart';
 
-class TopCourses extends StatefulWidget {
-  const TopCourses({super.key});
+class TopCourse extends StatefulWidget {
+  const TopCourse({super.key});
 
   @override
-  State<TopCourses> createState() => _TopCoursesState();
+  State<TopCourse> createState() => _TopCourseState();
 }
 
-class _TopCoursesState extends State<TopCourses> {
+class _TopCourseState extends State<TopCourse> {
   List<TopCourses>? courses;
   var isLoaded = false;
 
@@ -19,7 +20,7 @@ class _TopCoursesState extends State<TopCourses> {
   }
 
   getData() async {
-     //courses = await RemoteService().getCourses() ;
+    courses = await RemoteService().getCourses();
     if (courses != null) {
       setState(() {
         isLoaded = true;
@@ -29,43 +30,50 @@ class _TopCoursesState extends State<TopCourses> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: GridView.builder(
-        scrollDirection: Axis.horizontal,
-        physics: const ScrollPhysics(),
+    return SizedBox(
+      height: 250,
+      child: ListView.builder(
         shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 250,
-            // childAspectRatio: 1 / 2,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
-        itemCount: 10,
+        scrollDirection: Axis.horizontal,
+        itemCount: courses!.length,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: const EdgeInsets.all(8),
             child: Container(
-              //margin: const EdgeInsets.only(top: 18, bottom: 30),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 5,
-                    spreadRadius: 1,
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: Image.network(''),
-                  ),
-                  Text('sslc (malayalam)'),
-                  Text('1000 INR +Gst'),
-                ],
-              ),
-            ),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 5,
+                      spreadRadius: 1,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 150,
+                      width: 200,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(courses![index].thumbnail),
+                              fit: BoxFit.fill)),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      courses![index].title,
+                      style: const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(courses![index].price),
+                  ],
+                )),
           );
         },
       ),

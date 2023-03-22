@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:futursity/models/categorymodel.dart';
 import 'package:futursity/services/catogorymodel.dart';
 
-class Categories extends StatefulWidget {
-  const Categories({super.key});
+class Category extends StatefulWidget {
+  const Category({super.key});
 
   @override
-  State<Categories> createState() => _CategoriesState();
+  State<Category> createState() => _CategoryState();
 }
 
-class _CategoriesState extends State<Categories> {
-  List<Categories>? categories;
+class _CategoryState extends State<Category> {
+  late List<Categories>? categories;
   var isLoaded = false;
 
   @override
@@ -19,7 +20,7 @@ class _CategoriesState extends State<Categories> {
   }
 
   getData() async {
-     categories = await CategoryRemoteService().getCategories();
+    categories = await CategoryRemoteService().getCategories();
     if (categories != null) {
       setState(() {
         isLoaded = true;
@@ -35,12 +36,12 @@ class _CategoriesState extends State<Categories> {
         shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          mainAxisSpacing: 12,
-          crossAxisSpacing: 12,
-          mainAxisExtent: 250,
-          childAspectRatio: 0.75,
+          mainAxisSpacing: 8,
+          crossAxisSpacing: 8,
+          mainAxisExtent: 200,
+          //childAspectRatio: 0.90,
         ),
-        itemCount: 10,
+        itemCount: categories!.length,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: const EdgeInsets.all(8),
@@ -60,10 +61,26 @@ class _CategoriesState extends State<Categories> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(right: 8),
-                    child: Image.network(''),
+                    child:
+                        Image.network(categories![index].thumbnail.toString()),
                   ),
-                  Text('sslc (malayalam)'),
-                  Text('1000 INR +Gst'),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    categories![index].name,
+                    style: const TextStyle(
+                        fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Text(categories![index].numberOfCourses.toString()),
+                      const Text('  Courses')
+                    ],
+                  ),
                 ],
               ),
             ),

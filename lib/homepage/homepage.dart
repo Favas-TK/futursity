@@ -8,14 +8,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-      ),
+     
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,
         onPressed: () {},
         child: const Icon(Icons.format_line_spacing_outlined),
       ),
+      // body: Container(
+      //   child: TopCourse(),
+      // ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -29,12 +30,15 @@ class HomePage extends StatelessWidget {
                 TextButton(onPressed: () {}, child: const Text('All Courses'))
               ],
             ),
-           const TopCourses(),
-            const Text(
-              'Catogories',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+           const TopCourse(),
+            Padding(
+              padding: const EdgeInsets.only(right: 210),
+              child: const Text(
+                'Catogories',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
             ),
-            const Categories(),
+            const Category(),
           ],
         ),
       ),

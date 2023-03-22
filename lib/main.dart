@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:futursity/dashboard/dashboard.dart';
 import 'package:futursity/homepage/homepage.dart';
 
 void main() {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: const Dashboard(),
     );
   }
 }
